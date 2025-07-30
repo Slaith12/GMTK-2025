@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjs8v8m4mkf0i"]
+
+[ext_resource type="Script" uid="uid://dj5kiwbuw2nji" path="res://scripts/missile.gd" id="1_6cx5e"]
+[ext_resource type="Texture2D" uid="uid://cmt7vgxoib7du" path="res://sprites/circle.png" id="2_35udt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_872ht"]
+radius = 64.0
+
+[node name="Missile" type="AnimatableBody2D"]
+script = ExtResource("1_6cx5e")
+mass = 10.0
+correctionCoefficient = 50.0
+target_velocity = 1500.0
+metadata/_custom_type_script = "uid://djpm0kcnmkqoq"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_35udt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_872ht")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
