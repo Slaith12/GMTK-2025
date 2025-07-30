@@ -1,48 +1,59 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk4hbrd23d4qx"]
+[gd_scene load_steps=7 format=3 uid="uid://bk4hbrd23d4qx"]
 
 [ext_resource type="Script" uid="uid://c4sv0sn5c54s2" path="res://scripts/proj_test.gd" id="1_l6ekr"]
 [ext_resource type="PackedScene" uid="uid://b3j8u5c5t8iit" path="res://scenes/player.tscn" id="2_0e3rl"]
 [ext_resource type="Texture2D" uid="uid://chy0e4xh47rgt" path="res://icon.svg" id="3_b5mkc"]
 [ext_resource type="Texture2D" uid="uid://cmt7vgxoib7du" path="res://sprites/circle.png" id="3_l6ekr"]
 [ext_resource type="PackedScene" uid="uid://bjs8v8m4mkf0i" path="res://scenes/missile.tscn" id="5_b5mkc"]
+[ext_resource type="PackedScene" uid="uid://il4a147i4nn3" path="res://scenes/companion.tscn" id="6_ipo53"]
 
 [node name="ProjTest" type="Node2D"]
 script = ExtResource("1_l6ekr")
-projSpeed = 800.0
+projSpeed = 750.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
 
 [node name="Player" parent="." instance=ExtResource("2_0e3rl")]
 z_index = 5
-position = Vector2(-357, -234)
-influenceMaxStrength = 20000.0
-influenceMinStrength = 5000.0
-influenceInnerRadius = 200.0
-influenceOuterRadius = 800.0
-
-[node name="InnerDisplay" type="Sprite2D" parent="."]
-self_modulate = Color(1, 1, 0.411765, 1)
-z_index = -9
-scale = Vector2(0.546875, 0.546875)
-texture = ExtResource("3_l6ekr")
-
-[node name="InfluenceDisplay" type="Sprite2D" parent="."]
-modulate = Color(1, 0.105882, 1, 1)
-z_index = -10
-scale = Vector2(0.921875, 0.921875)
-texture = ExtResource("3_l6ekr")
+position = Vector2(-461, 160)
+baseSpeed = 400.0
 
 [node name="Spawner" type="Sprite2D" parent="."]
 modulate = Color(1, 0.152941, 0.34902, 1)
-position = Vector2(587, -425)
+position = Vector2(460, -212)
 texture = ExtResource("3_b5mkc")
 
 [node name="Missile" parent="." instance=ExtResource("5_b5mkc")]
 process_mode = 4
-visible = false
+correctionCoefficient = 3.0
+target_velocity = 750.0
 mass = 5.0
-correctionCoefficient = 10.0
 
-[connection signal="influence_activate" from="Player" to="." method="_on_player_influence_activate"]
-[connection signal="influence_deactivate" from="Player" to="." method="_on_player_influence_deactivate"]
+[node name="Sprite2D" parent="Missile" index="0"]
+scale = Vector2(0.25, 0.25)
+
+[node name="Companion" parent="." instance=ExtResource("6_ipo53")]
+position = Vector2(503, 52)
+influenceStrength = 15000.0
+targetRadius = 100.0
+
+[node name="InfluenceDisplay" type="Sprite2D" parent="Companion"]
+visible = false
+self_modulate = Color(1, 0.105882, 1, 0.462745)
+z_index = -10
+scale = Vector2(3.125, 3.125)
+texture = ExtResource("3_l6ekr")
+
+[node name="InnerDisplay" type="Sprite2D" parent="Companion"]
+visible = false
+self_modulate = Color(1, 1, 0.411765, 0.490196)
+z_index = -9
+scale = Vector2(0.78125, 0.78125)
+texture = ExtResource("3_l6ekr")
+
+[connection signal="influence_activate" from="Companion" to="." method="_on_player_influence_activate"]
+[connection signal="influence_deactivate" from="Companion" to="." method="_on_player_influence_deactivate"]
+
+[editable path="Missile"]
+[editable path="Companion"]

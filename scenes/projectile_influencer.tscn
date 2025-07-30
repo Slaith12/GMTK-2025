@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://1t0agnsbeguy"]
+
+[ext_resource type="Script" uid="uid://bae0r825rksqj" path="res://scripts/projectile_influence.gd" id="1_yig7b"]
+
+[node name="ProjectileInfluencer" type="Area2D" groups=["ProjInfluencers"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_yig7b")
