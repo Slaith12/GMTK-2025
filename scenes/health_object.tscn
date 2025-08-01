@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://db4311qiu3x1w"]
+
+[ext_resource type="Script" uid="uid://dpebvu50d3iyb" path="res://health_object.gd" id="1_x6dtv"]
+
+[node name="HealthObject" type="Area2D"]
+collision_layer = 16
+collision_mask = 32
+script = ExtResource("1_x6dtv")
+
+[node name="HealthBar" type="Polygon2D" parent="."]
+scale = Vector2(5, 1)
+color = Color(1, 0.282353, 0.160784, 1)
+polygon = PackedVector2Array(-10, 10, 10, 10, 10, -10, -10, -10)
+
+[node name="HealthDisplay" type="Polygon2D" parent="HealthBar"]
+position = Vector2(-10, 0)
+color = Color(0.219608, 0.784314, 0.152941, 1)
+polygon = PackedVector2Array(0, 10, 0, -10, 20, -10, 20, 10)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

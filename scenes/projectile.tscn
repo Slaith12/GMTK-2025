@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://djpm0kcnmkqoq" path="res://scripts/projectile.gd" id="1_c8fcr"]
 
-[node name="Projectile" type="AnimatableBody2D" groups=["Projectiles"]]
-collision_layer = 4
-collision_mask = 11
+[node name="Projectile" type="Area2D" groups=["Projectiles"]]
+collision_layer = 36
+collision_mask = 18
 script = ExtResource("1_c8fcr")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

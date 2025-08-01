@@ -10,6 +10,3 @@ func _physics_process(delta: float) -> void:
 	var correctionStrength = (target_velocity - velocity.length()) * correctionCoefficient * delta
 	
 	velocity += velocity.normalized() * correctionStrength
-
-func _on_timer_timeout() -> void:
-	queue_free()
