@@ -3,7 +3,7 @@ extends Node2D
 @onready var influence_display: Sprite2D = $Companion/InfluenceDisplay
 @onready var inner_display: Sprite2D = $Companion/InnerDisplay
 @onready var player: Player = $Player
-@onready var spawner: Sprite2D = $Spawner
+@onready var spawner: BasicEnemy = $BasicEnemy
 @onready var missile: Missile = $Missile
 @onready var companion: Companion = $Companion
 @onready var companion_influence_shape: CollisionShape2D = $Companion/ProjectileInfluencer/CollisionShape2D
@@ -34,11 +34,10 @@ func _physics_process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("secondary_action"):
 		var instance : Missile = missile.duplicate()
-		instance.velocity = spawner.position.direction_to(player.position) * missile.target_velocity
-		instance.position = spawner.position
 		instance.process_mode = Node.PROCESS_MODE_INHERIT
 		instance.show()
 		add_child(instance)
+		spawner.fire(spawner.position.direction_to(player.position), instance)
 	elif event.is_action_pressed("primary_action"):
 		companion.activate()
 	elif event.is_action_released("primary_action"):

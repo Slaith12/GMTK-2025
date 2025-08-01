@@ -254,7 +254,7 @@ maxHealth = 22
 position = Vector2(0, -37)
 shape = SubResource("CircleShape2D_p4qgt")
 
-[connection signal="body_entered" from="ProjectileInfluencer" to="." method="_on_projectile_influencer_body_entered"]
-[connection signal="body_exited" from="ProjectileInfluencer" to="." method="_on_projectile_influencer_body_exited"]
+[connection signal="area_entered" from="ProjectileInfluencer" to="." method="_on_projectile_influencer_body_entered"]
+[connection signal="area_exited" from="ProjectileInfluencer" to="." method="_on_projectile_influencer_body_exited"]
 [connection signal="damaged" from="HealthObject" to="." method="hurt" unbinds=2]
 [connection signal="killed" from="HealthObject" to="." method="stun"]

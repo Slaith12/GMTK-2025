@@ -6,7 +6,7 @@ extends Area2D
 
 @export var maxHealth := 33
 @export var currentHealth : int
-@export var regenDelay := 1.25
+@export var regenDelay := 1.75
 @export var regenTickDelay := 0.04
 @export var ignoreDamage := false
 

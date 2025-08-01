@@ -41,6 +41,8 @@ func _physics_process(delta: float) -> void:
 func influence_projectiles(delta: float) -> void:
 	for i in influencedProjectiles.size():
 		var proj := influencedProjectiles[i]
+		if proj.activeTime < proj.waitTime:
+			continue
 		var velocity := proj.velocity
 		var offset := global_position - proj.global_position
 		var congruency := offset.normalized().dot(velocity.normalized())

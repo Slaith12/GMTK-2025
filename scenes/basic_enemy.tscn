@@ -1,0 +1,139 @@
+[gd_scene load_steps=12 format=3 uid="uid://dok280bphjgw2"]
+
+[ext_resource type="Script" uid="uid://5opoga7p1yxi" path="res://scripts/basic_enemy.gd" id="1_fn5nn"]
+[ext_resource type="Texture2D" uid="uid://dco666h3mljbo" path="res://sprites/Kenney/spritesheet-characters-default.png" id="2_cuegt"]
+[ext_resource type="PackedScene" uid="uid://db4311qiu3x1w" path="res://scenes/health_object.tscn" id="3_wm70f"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ve544"]
+radius = 35.0
+height = 88.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhw0p"]
+radius = 40.0
+height = 104.0
+
+[sub_resource type="Animation" id="Animation_cuegt"]
+resource_name = "Death"
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:targetVelocity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_wm70f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:targetVelocity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wm70f"]
+_data = {
+&"Death": SubResource("Animation_cuegt"),
+&"RESET": SubResource("Animation_wm70f")
+}
+
+[sub_resource type="Animation" id="Animation_n365g"]
+resource_name = "Hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.196078, 0.137255, 1), Color(1, 0.196078, 0.137255, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fn5nn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cij6a"]
+_data = {
+&"Hit": SubResource("Animation_n365g"),
+&"RESET": SubResource("Animation_fn5nn")
+}
+
+[node name="BasicEnemy" type="CharacterBody2D"]
+script = ExtResource("1_fn5nn")
+deathKnockback = 500.0
+fireSpacing = 70
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -23)
+texture = ExtResource("2_cuegt")
+region_enabled = true
+region_rect = Rect2(256, 640, 128, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_ve544")
+
+[node name="HealthObject" parent="." instance=ExtResource("3_wm70f")]
+position = Vector2(0, 56)
+regenDelay = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthObject"]
+position = Vector2(0, -62)
+shape = SubResource("CapsuleShape2D_qhw0p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wm70f")
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_cij6a")
+}
+
+[node name="FirePos" type="Marker2D" parent="."]
+position = Vector2(0, 70)
+
+[connection signal="damaged" from="HealthObject" to="." method="hurt" unbinds=2]
+[connection signal="killed" from="HealthObject" to="." method="kill" unbinds=1]
