@@ -16,6 +16,7 @@ script = ExtResource("1_l6ekr")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("2_0e3rl")]
+unique_name_in_owner = true
 z_index = 5
 position = Vector2(-461, 160)
 baseSpeed = 400.0
@@ -26,24 +27,11 @@ z_index = -2
 z_as_relative = false
 texture = ExtResource("3_l6ekr")
 
-[node name="Missile" parent="." groups=["PlayerDamaging"] instance=ExtResource("5_b5mkc")]
-process_mode = 4
-visible = false
-target_velocity = 600.0
-mass = 5.0
-
-[node name="Sprite2D" type="Sprite2D" parent="Missile"]
-scale = Vector2(0.15, 0.15)
-texture = ExtResource("3_l6ekr")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Missile"]
-shape = SubResource("CircleShape2D_ipo53")
-
 [node name="Companion" parent="." instance=ExtResource("6_ipo53")]
+unique_name_in_owner = true
 position = Vector2(503, 52)
-influenceStrength = 15000.0
-targetRadius = 200.0
-redirectCoef = -0.4
+influenceStrength = 18000.0
+redirectCoef = -0.3
 
 [node name="CollisionShape2D" parent="Companion/ProjectileInfluencer" index="0"]
 visible = false
@@ -60,11 +48,31 @@ z_index = -9
 scale = Vector2(0.78125, 0.78125)
 texture = ExtResource("3_l6ekr")
 
+[node name="Missile" parent="." groups=["PlayerDamaging"] instance=ExtResource("5_b5mkc")]
+process_mode = 4
+visible = false
+target_velocity = 600.0
+mass = 5.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Missile"]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("3_l6ekr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Missile"]
+shape = SubResource("CircleShape2D_ipo53")
+
 [node name="BasicEnemy" parent="." instance=ExtResource("6_exloi")]
 position = Vector2(459, -205)
+attackCooldown = 2
+moveCooldown = 2.0
+moveSearchRange = 200.0
+innerRange = 250.0
+outerRange = 450.0
+walkMoveSpeed = 140.0
+acceleration = 250.0
 
 [connection signal="influence_activate" from="Companion" to="." method="_on_player_influence_activate"]
 [connection signal="influence_deactivate" from="Companion" to="." method="_on_player_influence_deactivate"]
 
-[editable path="Missile"]
 [editable path="Companion"]
+[editable path="Missile"]

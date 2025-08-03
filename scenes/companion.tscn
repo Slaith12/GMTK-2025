@@ -6,7 +6,61 @@
 [ext_resource type="PackedScene" uid="uid://db4311qiu3x1w" path="res://scenes/health_object.tscn" id="4_mqvd2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rp0js"]
-radius = 300.0
+radius = 250.0
+
+[sub_resource type="Animation" id="Animation_rp0js"]
+resource_name = "Attracting"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(384, 384, 64, 64)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.349066, -0.25, 0, 0.4, 0, -0.349066, -0.4, 0, 0.4, 0, 0.349066, -0.4, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.5, 3)
+}
+
+[sub_resource type="Animation" id="Animation_mqvd2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(384, 448, 64, 64)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_eol6h"]
 resource_name = "Stun"
@@ -47,60 +101,6 @@ tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0),
 "points": PackedFloat32Array(0.410543, -0.25, 0, 0.0333333, -1.47715, -10.3184, -0.367, 0, 0, 0, -10.3184, 0, 0, 0.166667, -0.524823, -12.5664, -0.1, 1.57028, 0.25, 0),
 "times": PackedFloat32Array(0, 1, 2.53333, 2.83333)
-}
-
-[sub_resource type="Animation" id="Animation_mqvd2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:region_rect")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(384, 448, 64, 64)]
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_rp0js"]
-resource_name = "Attracting"
-length = 3.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:region_rect")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Rect2(384, 384, 64, 64)]
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(0.349066, -0.25, 0, 0.4, 0, -0.349066, -0.4, 0, 0.4, 0, 0.349066, -0.4, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1.5, 3)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mqvd2"]
@@ -248,7 +248,7 @@ region_rect = Rect2(384, 448, 64, 64)
 
 [node name="HealthObject" parent="." instance=ExtResource("4_mqvd2")]
 position = Vector2(0, 37)
-maxHealth = 22
+maxHealth = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HealthObject"]
 position = Vector2(0, -37)
